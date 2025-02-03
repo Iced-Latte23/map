@@ -17,18 +17,15 @@
         }
 
         h1 {
-            font-size: 3vw;
-            /* Adjust based on screen size */
+            font-size: 45px;
             color: white;
             margin-top: 20px;
             text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
         }
 
-        /* Make the map responsive */
         #map {
             height: 500px;
-            width: 95vw;
-            /* Adjust to screen size */
+            width: 90%;
             max-width: 800px;
             margin: 20px auto;
             border-radius: 15px;
@@ -36,34 +33,34 @@
             box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2);
         }
 
-        /* Memory popup responsiveness */
+        .memory-popup {
+            text-align: left;
+        }
+
         .memory-popup img,
         .memory-popup video {
             width: 100%;
-            max-width: 400px;
-            /* Prevent overly large images */
             border-radius: 10px;
             margin-bottom: 10px;
         }
 
-        /* Adjust font sizes for smaller screens */
         .memory-popup h3 {
-            font-size: 4vw;
+            font-size: 18px;
             color: #ff3366;
             margin: 0;
         }
 
         .memory-popup p {
-            font-size: 3vw;
+            font-size: 14px;
             color: #555;
         }
 
-        /* Make slideshow container responsive */
+        /* Slideshow container resizes based on content */
         .slideshow-container {
             position: relative;
-            width: 90%;
-            /* Adjust width based on screen size */
+            width: 100%;
             max-width: 400px;
+            /* Set a maximum width */
             margin: auto;
             overflow: hidden;
             display: flex;
@@ -71,7 +68,7 @@
             align-items: center;
         }
 
-        /* Ensure images and videos scale properly */
+        /* Images and videos fit naturally */
         .mySlides img,
         .mySlides video {
             max-width: 100%;
@@ -81,7 +78,7 @@
             margin: auto;
         }
 
-        /* Adjust navigation button sizes for mobile */
+        /* Navigation buttons */
         .prev,
         .next {
             position: absolute;
@@ -89,25 +86,19 @@
             transform: translateY(-50%);
             background-color: rgba(0, 0, 0, 0.5);
             color: white;
-            font-size: 14px;
-            /* Smaller buttons on mobile */
-            padding: 8px;
+            font-size: 18px;
+            padding: 10px;
             cursor: pointer;
             border: none;
             z-index: 2;
         }
 
-        /* Reduce button size on smaller screens */
-        @media (max-width: 600px) {
-            h1 {
-                font-size: 6vw;
-            }
+        .prev {
+            left: 5px;
+        }
 
-            .prev,
-            .next {
-                font-size: 12px;
-                padding: 6px;
-            }
+        .next {
+            right: 5px;
         }
     </style>
 </head>
@@ -189,21 +180,21 @@
 
         // Function to create the slideshow in popup
         function createSlideshow(images) {
-            let slideshowContent = <div class="slideshow-container">;
+            let slideshowContent = `<div class="slideshow-container">`;
 
             images.forEach((image, index) => {
-                slideshowContent += 
+                slideshowContent += `
             <div class="mySlides fade">
                 <img src="${image}" alt="Memory Image ${index + 1}">
             </div>
-        ;
+        `;
             });
 
-            slideshowContent += 
+            slideshowContent += `
         <button class="prev" onclick="plusSlides(-1)">&#10094;</button>
         <button class="next" onclick="plusSlides(1)">&#10095;</button>
     </div>
-    ;
+    `;
 
             return slideshowContent;
         }
@@ -238,23 +229,23 @@
 
         // Add markers for each memory
         memories.forEach(memory => {
-            let popupContent = <div class="memory-popup ">
+            let popupContent = `<div class="memory-popup ">
         ${
                 // Check if the memory has an array of images (slideshow)
                 memory.image && Array.isArray(memory.image)
                     ? createSlideshow(memory.image)
                     : // If it's a single image
-                    (memory.image ? <img src="${memory.image}" alt="${memory.title}"> : '')
+                    (memory.image ? `<img src="${memory.image}" alt="${memory.title}">` : '')
                 }
         ${
                 // If there's a video
-                memory.video ? <video controls autoplay loop muted>
+                memory.video ? `<video controls autoplay loop muted>
                 <source src="${memory.video}" type="video/mp4">
-            </video> : ''
+            </video>` : ''
                 }
         <h3>${memory.title}</h3>
         <p>${memory.description}</p>
-    </div>;
+    </div>`;
 
             const marker = L.marker(memory.coords, { icon: heartIcon })
                 .addTo(map)
@@ -270,4 +261,4 @@
     </script>
 </body>
 
-</html> 
+</html>
