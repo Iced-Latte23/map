@@ -18,6 +18,7 @@
 
         h1 {
             font-size: 3vw;
+            /* Adjust based on screen size */
             color: white;
             margin-top: 20px;
             text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
@@ -27,6 +28,7 @@
         #map {
             height: 500px;
             width: 95vw;
+            /* Adjust to screen size */
             max-width: 800px;
             margin: 20px auto;
             border-radius: 15px;
@@ -37,8 +39,9 @@
         /* Memory popup responsiveness */
         .memory-popup img,
         .memory-popup video {
-            width: 80%;
-            max-width: 300px;
+            width: 100%;
+            max-width: 400px;
+            /* Prevent overly large images */
             border-radius: 10px;
             margin-bottom: 10px;
         }
@@ -58,8 +61,9 @@
         /* Make slideshow container responsive */
         .slideshow-container {
             position: relative;
-            width: 80%;
-            max-width: 300px;
+            width: 90%;
+            /* Adjust width based on screen size */
+            max-width: 400px;
             margin: auto;
             overflow: hidden;
             display: flex;
@@ -110,7 +114,7 @@
 
 <body>
     <audio id="bgMusic" loop autoplay>
-        <source src="https://www.bensound.com/bensound-music/bensound-love.mp3" type="audio/mpeg">
+        <source src="music/bensound-love.mp3" type="audio/mpeg">
     </audio>
 
     <h1>Our Love Map 💌</h1>
@@ -185,21 +189,21 @@
 
         // Function to create the slideshow in popup
         function createSlideshow(images) {
-            let slideshowContent = `<div class="slideshow-container">`;
+            let slideshowContent = <div class="slideshow-container">;
 
             images.forEach((image, index) => {
-                slideshowContent += `
+                slideshowContent += 
             <div class="mySlides fade">
                 <img src="${image}" alt="Memory Image ${index + 1}">
             </div>
-        `;
+        ;
             });
 
-            slideshowContent += `
+            slideshowContent += 
         <button class="prev" onclick="plusSlides(-1)">&#10094;</button>
         <button class="next" onclick="plusSlides(1)">&#10095;</button>
     </div>
-    `;
+    ;
 
             return slideshowContent;
         }
@@ -234,23 +238,23 @@
 
         // Add markers for each memory
         memories.forEach(memory => {
-            let popupContent = `<div class="memory-popup ">
+            let popupContent = <div class="memory-popup ">
         ${
                 // Check if the memory has an array of images (slideshow)
                 memory.image && Array.isArray(memory.image)
                     ? createSlideshow(memory.image)
                     : // If it's a single image
-                    (memory.image ? `<img src="${memory.image}" alt="${memory.title}">` : '')
+                    (memory.image ? <img src="${memory.image}" alt="${memory.title}"> : '')
                 }
         ${
                 // If there's a video
-                memory.video ? `<video controls autoplay loop muted>
+                memory.video ? <video controls autoplay loop muted>
                 <source src="${memory.video}" type="video/mp4">
-            </video>` : ''
+            </video> : ''
                 }
         <h3>${memory.title}</h3>
         <p>${memory.description}</p>
-    </div>`;
+    </div>;
 
             const marker = L.marker(memory.coords, { icon: heartIcon })
                 .addTo(map)
@@ -266,4 +270,4 @@
     </script>
 </body>
 
-</html>
+</html> 
